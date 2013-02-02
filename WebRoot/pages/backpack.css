@@ -1,4 +1,4 @@
-
+Ä
 /* - - - - - - - - - - THEMEAGE  - - - - - - - - - - */
 
 @font-face {
@@ -223,6 +223,56 @@ body {
 /* - - - - - - - - - - ALL CLASSES  - - - - - - - - - - */
 
 .classDiv {
+	background-image: url(../images/class_sm.png);
+	height: 265px;
+	width: 200px;
+	margin:5px;
+	white-space2: pre-wrap;
+	white-space2: -moz-pre-wrap;
+	white-space2: -pre-wrap;  
+	white-space2: -o-pre-wrap;  
+	word-wrap2: break-word;
+	cursor:pointer;
+}
+
+.classNotesDiv {
+	background-image: url(../images/class_sm.png);
+	height: 265px;
+	width: 200px;
+	margin:5px;
+	white-space2: pre-wrap;
+	white-space2: -moz-pre-wrap;
+	white-space2: -pre-wrap;  
+	white-space2: -o-pre-wrap;  
+	word-wrap2: break-word;
+	cursor:pointer;
+}
+
+.classQADiv {
+	background-image: url(../images/class_sm.png);
+	height: 265px;
+	width: 200px;
+	margin:5px;
+	white-space2: pre-wrap;
+	white-space2: -moz-pre-wrap;
+	white-space2: -pre-wrap;  
+	white-space2: -o-pre-wrap;  
+	word-wrap2: break-word;
+	cursor:pointer;
+}
+.classAssignmentsDiv {
+	background-image: url(../images/class_sm.png);
+	height: 265px;
+	width: 200px;
+	margin:5px;
+	white-space2: pre-wrap;
+	white-space2: -moz-pre-wrap;
+	white-space2: -pre-wrap;  
+	white-space2: -o-pre-wrap;  
+	word-wrap2: break-word;
+	cursor:pointer;
+}
+.classDocumentsDiv {
 	background-image: url(../images/class_sm.png);
 	height: 265px;
 	width: 200px;
