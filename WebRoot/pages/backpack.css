@@ -1,45 +1,59 @@
 
+/* - - - - - - - - - - THEMEAGE  - - - - - - - - - - */
 
+@font-face {
+    font-family: 'leander';
+    src: url('../fonts/leander-webfont.eot');
+    src: url('../fonts/leander-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/leander-webfont.woff') format('woff'),
+         url('../fonts/leander-webfont.ttf') format('truetype'),
+         url('../fonts/leander-webfont.svg#leanderregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
 
+body {
+	margin:0; 
+	padding:0; 
+	width:100%; 
+	height:100%; 
+	overflow:hidden;
+}
 
-body{margin:0; padding:0; width:100%; height:100%; overflow:hidden;}
-.splashImage{
-	position:absolute; z-index:1; width:100%; height:100%; top:0; left:0;
-	background-image2:url('../images/wood1.jpg');
-	background-image:url('../images/chalk2.jpg');
-	 overflow-y: scroll;
-            -webkit-overflow-scrolling: touch;
-	}
+.splashImage {
+	position:absolute; 
+	z-index:1; 
+	width:100%; 
+	height:100%; 
+	top:0; 
+	left:0;
+	background-image:url('../images/wood.png');
+	overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+}
 
-.splashImage2
-{
+/*.splashImage2 {
 	background-image2:url('../images/wood1.jpg'); 
 	background-image:url('../images/chalk1.png');
 	background-size:100% 100%;
-}
+}*/
 
-
-.splashText 
-{ 
+.splashText { 
 	text-align: center; 
 	font-family: Arial;
-	 font-size: 155%; 
-	  font-weight: bold;
+	font-size: 155%; 
+	font-weight: bold;
 }
 
-.labelClass 
-{ 
+.labelClass  { 
 	color: #B4886B;
-font-weight: bold;
-display: block;
-width: 150px;
-float: left;
-
-
+	font-weight: bold;
+	display: block;
+	width: 150px;
+	float: left;
 }
 
-.background 
-{
+.background {
     width: 100%; 
     height: 100%; 
     position: fixed; 
@@ -53,12 +67,9 @@ float: left;
     height:100%;
 }
 
-
-
 .splash {
    align: center;
 }
-
 
 .homepage_body {
 	background-color: #ffffff;
@@ -68,7 +79,7 @@ float: left;
 	background-position2: center;
 	background-size: 100%;
 	width:100%;
-  height:100%;
+  	height:100%;
 }
 
 
@@ -97,32 +108,6 @@ float: left;
 }
 
 
-
-.semesterDiv
-{
-   background-image: url(../images/semester1.jpg);
-   border2: solid red;
-   height: 124px;
-   width: 200px;
-   margin:5px;
-   white-space2: pre-wrap; /* css-3 */
-    white-space2: -moz-pre-wrap; /* Mozilla, since 1999 */
-    white-space2: -pre-wrap; /* Opera 4-6 */   
-    white-space2: -o-pre-wrap; /* Opera 7 */   
-    word-wrap2: break-word; /* Internet Explorer 5.5+ */
-
-}
-
-.semesterText 
-{
-	margin:20%; 
-	padding:20px;
-	font-size: 100%; 
-	 font-weight: bold;
-	text-align2: center;
-}
-
-
 .cleaner{clear: left; line-height: 0; height: 0;}
 .rows{ border2: solid black; width: 100%; min-height: 125px;margin: 45px}
 .rowsAlt{background-color: blue;}
@@ -134,20 +119,6 @@ float: left;
 
 
 
-.classDiv
-{
-   background-image: url(../images/paper3.jpg);
-   border2: solid red;
-   height: 124px;
-   width: 200px;
-   margin:5px;
-   white-space2: pre-wrap; /* css-3 */
-    white-space2: -moz-pre-wrap; /* Mozilla, since 1999 */
-    white-space2: -pre-wrap; /* Opera 4-6 */   
-    white-space2: -o-pre-wrap; /* Opera 7 */   
-    word-wrap2: break-word; /* Internet Explorer 5.5+ */
-
-}
 
 
 .textareaStyled {
@@ -162,49 +133,108 @@ float: left;
 }
 
 
-.answerDiv
-{
-   border2: solid red;
-   height: 124px;
-   width: 200px;
-   margin:5px;
-   text-align: center; 
+.answerDiv {
+	border2: solid red;
+	height: 124px;
+	width: 200px;
+	margin:5px;
+	text-align: center; 
 	font-family: Arial;
-	 font-size: 155%; 
-	  font-weight: bold;
+	font-size: 155%; 
+	font-weight: bold;
 }
 
 
-.qaContents
-{
+.qaContents {
 	border: solid blue;
 	background-color: white;
 	text-align: center; 
 	font-family: Arial;
 	font-size: 155%; 
-	 font-weight: bold;
+	font-weight: bold;
 	
 }
 
-.qaContentsQuestion
-{
+.qaContentsQuestion {
 	margin:15px;
 	border: solid black;
 	background-color: white;
 	text-align: center; 
 	font-family: Arial;
 	font-size: 155%; 
-	 font-weight: bold;
+	font-weight: bold;
 }
 
-.qaContentsAnswer
-{
-	
+.qaContentsAnswer {
 	margin:15px;
 	border: solid black;
 	background-color: black;
 	text-align: center; 
 	font-family: Arial;
 	font-size: 155%; 
-	 font-weight: bold;
+	font-weight: bold;
+}
+
+/* - - - - - - - - - - ADD SEMESTER  - - - - - - - - - - */
+
+#notebook {
+	width: 328px;
+	height: 430px;
+	background: url(../images/notebook_lg.png) no-repeat;
+	margin: 0 auto;
+	background-size: 100%;
+}
+
+#addFields {
+	width:70%;
+	margin: 0 auto;
+}
+
+
+/* - - - - - - - - - - ALL SEMESTERS  - - - - - - - - - - */
+
+.semesterDiv {
+	background-image: url(../images/notebook_sm.png);
+	border2: solid red;
+	height: 265px;
+	width: 200px;
+	margin:5px;
+	white-space2: pre-wrap;
+	white-space2: -moz-pre-wrap;
+	white-space2: -pre-wrap; 
+	white-space2: -o-pre-wrap;
+	word-wrap2: break-word;
+	cursor:pointer;
+
+}
+
+.semesterText {
+	margin: 0 auto;
+	padding: 59px 23px 0 53px;
+	font-weight: bold;
+	text-align: center;
+	font-family: 'leander', serif;
+	font-size: 18pt;
+	text-shadow: none;
+	color: rgba(255,205,0,.6);
+}
+
+
+/* - - - - - - - - - - ALL CLASSES  - - - - - - - - - - */
+
+.classDiv {
+	background-image: url(../images/class_sm.png);
+	height: 265px;
+	width: 200px;
+	margin:5px;
+	white-space2: pre-wrap;
+	white-space2: -moz-pre-wrap;
+	white-space2: -pre-wrap;  
+	white-space2: -o-pre-wrap;  
+	word-wrap2: break-word;
+	cursor:pointer;
+}
+
+.classDiv .semesterText {
+	color: #26158c;
 }

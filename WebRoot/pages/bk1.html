@@ -1038,33 +1038,26 @@ function validateSemester() {
 		<div class="splashText">Backpack-Add Semester</div> 
 	</div>
 	<div id="semesterAddDiv"> 
-		<div data-role="fieldcontain"> 
-					<label class="labelClass" for="semesterName">Semester Name:</label> 
-					<input type="text" maxlength="55" id="semesterName" name="semesterName" style="width:50%"/>
-				</div>
- 
-				<div data-role="fieldcontain">  
-					<label for="semesterSession">Semeter Session:</label> <select
-						name="semesterSession" id="semesterSession"
-						data-native-menu="false">
-						<option value="">Select...</option> 
- 
-					</select>
-				</div>
-
-				<div data-role="fieldcontain">
-					<label for="schoolName">School Name:</label> 
-					<input type="text" name="schoolName" id="schoolName" style="width:50%">
-				</div>
-
-
-
-				 <input type="button" value="Update Semester" name="updateSemester" id="updateSemester" data-inline="true">
-					
-	
+    	<div id="notebook"></div>
+        
+        <div id="addFields">
+            <div data-role="fieldcontain"> 
+                <label class="labelClass" for="semesterName">Semester Name:</label> 
+                <input type="text" maxlength="55" id="semesterName" name="semesterName" style="width:50%"/>
+            </div>
+            <div data-role="fieldcontain">  
+                <label for="semesterSession">Semeter Session:</label> 
+                <select  name="semesterSession" id="semesterSession" data-native-menu="false">
+                    <option value="">Select...</option> 
+                </select>
+            </div>
+            <div data-role="fieldcontain">
+                <label for="schoolName">School Name:</label> 
+                <input type="text" name="schoolName" id="schoolName" style="width:50%">
+            </div>
+            <input type="button" value="Update Semester" name="updateSemester" id="updateSemester" data-inline="true">
+        </div>
 	</div>
-	
-	
 </div>	
 
 	<!-- class pages -->
@@ -1176,19 +1169,19 @@ function validateSemester() {
 	
 		<div id="row1" class="rows">;
 			<div class="cols col1">
-				<div class="classDiv" onclick="javascript:classInfo()"><div class="semesterText">Class Info</div></div>
+				<div class="classDiv" onClick="javascript:classInfo()"><div class="semesterText">Class Info</div></div>
 			</div>
 			<div class="cols col1">
-				<div class="classDiv" onclick="javascript:classNotes()"><div class="semesterText">Class Notes</div></div>
+				<div class="classDiv" onClick="javascript:classNotes()"><div class="semesterText">Class Notes</div></div>
 			</div>
 			<div class="cols col1">
-				<div class="classDiv" onclick="javascript:classQA()"><div class="semesterText">Class Q&A</div></div>
+				<div class="classDiv" onClick="javascript:classQA()"><div class="semesterText">Class Q&A</div></div>
 			</div>
 			<div class="cols col1">
-				<div class="classDiv" onclick="javascript:classAssignments()"><div class="semesterText">Class Assignments</div></div>
+				<div class="classDiv" onClick="javascript:classAssignments()"><div class="semesterText">Class Assignments</div></div>
 			</div>
 			<div class="cols col1">
-				<div class="classDiv" onclick="javascript:classDocuments()"><div class="semesterText">Class Documents</div></div>
+				<div class="classDiv" onClick="javascript:classDocuments()"><div class="semesterText">Class Documents</div></div>
 			</div>
 		</div>
 	
