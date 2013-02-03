@@ -1,4 +1,7 @@
-Ä
+
+textarea { border: none; }
+body { padding: 0; }
+
 /* - - - - - - - - - - THEMEAGE  - - - - - - - - - - */
 
 @font-face {
@@ -121,15 +124,20 @@ body {
 
 
 
-.textareaStyled {
-	width2: 600px;
-	heigh2t: 120px;
+.textareaStyled{
+	width2: 100%; 
+	height2: 88%;
 	border: 3px solid #cccccc;
 	padding: 5px;
 	font-family: Tahoma, sans-serif;
-	background-image:url('../images/wood1.jpg');
+	background-image:url('../images/wood.png');
 	background-position: bottom right;
 	background-repeat: no-repeat;
+}
+
+body.mceContentBody { 
+   background: #fff; 
+   color:#000;
 }
 
 

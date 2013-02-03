@@ -1,0 +1,16 @@
+/* Site rules */
+body {
+   background: #aaaaaa url('/images/paper.jpg');
+}
+
+/* TinyMCE specific rules */
+body.mceContentBody {
+   background-color: pink ;
+   background-image: url('../images/linedPaper.jpg');
+   background-repeat2:repeat-x;
+   height2: 1000px;
+}
+
+.mceContentBody a {
+   color: red !important; /* FF requires a important here */
+}

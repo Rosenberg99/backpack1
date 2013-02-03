@@ -11,8 +11,6 @@
 <script type="text/javascript" src="http://dev.jtsage.com/cdn/simpledialog/latest/jquery.mobile.simpledialog.min.js"></script>
 <script type="text/javascript" src="../scripts/db.js"></script>
 
-
-
 <script type="text/javascript" src="../scripts/tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
 <script type="text/javascript" src="../scripts/tinymce/jscripts/tiny_mce/jquery.tinymce.js"></script>
 
@@ -246,6 +244,10 @@
 			$.mobile.changePage($('#editQuestionPage'));
 			
 		});
+		$("#newNoteBtn").click(function() {
+			noteSelect(-1);
+			
+		});
 		
 		
 		
@@ -254,28 +256,45 @@
 		tinyMCE.init({
     		// General options
     		mode : "textareas",
-    		theme : "simple",
+    		theme : "advanced",
     
-    // Theme options
-    theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,styleselect,formatselect,fontselect,fontsizeselect",
-    theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,insertdate,inserttime,preview,|,forecolor,backcolor",
-    theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,media,advhr,|,print,|,ltr,rtl,|,fullscreen",
-    theme_advanced_buttons4 : "insertlayer,moveforward,movebackward,absolute,|,styleprops,spellchecker,|,cite,abbr,acronym,del,ins,attribs,|,visualchars,nonbreaking,template,blockquote,pagebreak,|,insertfile,insertimage",
-    theme_advanced_toolbar_location : "top",
-    theme_advanced_toolbar_align : "left",
-    theme_advanced_statusbar_location : "bottom",
-    theme_advanced_resizing : true,
-    onchange_callback : "myCustomOnChangeHandler",
-    content_css : "./backpack.css",
-    
-    
-    width: "100%",
-    height: "400"
-});
+    		// Theme options
+   			theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,",
+    		theme_advanced_toolbar_location : "top",
+    		theme_advanced_toolbar_align : "left",
+    		theme_advanced_statusbar_location : "bottom",
+    		theme_advanced_resizing : true,
+     		theme_advanced_source_editor_height : 1100,
+    		content_css : "mce.css",
+    		body_class2 : "mceContentBody",
+    		body_id2 : "theNote", 
+    		width: "100%",
+    		height: "99%"
+		});
+		
+		sizeNote();
+		
 		
 
 	});
 	
+function sizeNote()
+{
+
+	$('#theNote').autosize({append: "\n"});
+	//var $textarea = $( '#theNote' );
+	//alert($window.height());
+   //	$textarea.height( $window.height() );
+   //	$textarea.width( $window.width() );
+  // 	 showHeight("theNote", $("#theNote").height());
+
+}
+
+function showHeight(ele, h) {
+      alert("The height for the " + ele +
+                    " is " + h + "px.");
+    }
+    
 function myCustomOnChangeHandler(inst) {
        // alert("Some one modified something");
        // alert("The HTML is now:" + inst.getBody().innerHTML);
@@ -696,43 +715,53 @@ function validateSemester() {
 				//alert("getClassNotes="+len);		
 				//<li><a href="#xxx" data-target="main">Settings</a></li>
 				
-				htm=htm+'<div id="row1" class="rows">';
-				var newClick=' onclick="javascript:noteSelect(-1)" ';
-				htm=htm+'<div class="cols col1">';
-				htm=htm+'<div class="classDiv"'+newClick+'><div class="semesterText">'+'Add Note'+'</div></div>';
-				htm=htm+'</div>';
-				htm=htm+'</div>';
-				htm=htm+'<br>';
+				//htm=htm+'<div id="row1" class="rows">';
+				//var newClick=' onclick="javascript:noteSelect(-1)" ';
+				//htm=htm+'<div class="cols col1">';
+				//htm=htm+'<div class="classDiv"'+newClick+'><div class="semesterText">'+'Add Note'+'</div></div>';
+				//htm=htm+'</div>';
+				//htm=htm+'</div>';
+				//htm=htm+'<br>';
 				for (i = 0; i < len; i++) {
 					theDate=theClassNotes.rows.item(i).dateCreated.substring(0, 8);
 					if(currentDate != theDate)
 					{
-						if(i > 0)
+						//alert("datechange="+theDate);
+						if(i == 0)
 						{
-							htm=htm+'</div>';
-							//htm=htm+'<div id="row1" class="rows">';
+							htm=htm+'<ul id="theNoteList" name="theNoteList" data-role="listview">';
 						}
 						fDate=dateFormatter(theDate);
-						//fDate="xxx";
-						//htm=htm+'<li data-role="list-divider" data-divider-theme="e" data-theme="a">'+fDate+'</li>';
-						htm=htm+'<h3>'+fDate+'</h3>';
-						htm=htm+'<div id="row1" class="rows">';
+						htm=htm+'<li data-role="list-divider">'+fDate.substring(0,15)+'</li>';
 						currentDate=theDate;
 					}
 					var sid =  theClassNotes.rows.item(i).id;
 					var notesClick='href="#" onclick="javascript:noteSelect(\''+sid+'\')"';
 					notesClick=' onclick="javascript:noteSelect(\''+sid+'\')" ';
-					var showNote=theClassNotes.rows.item(i).notes.substring(0, 25);
+					var showNote=theClassNotes.rows.item(i).notes.substring(0, 50);
+					htm=htm+'<li><a '+notesClick+'>'+strip(showNote)+'</a></li>';
+					
+					
 					//htm=htm+'<li><a '+notesClick+' data-target="main" >'+showNote+'...</a></li>';
-					htm=htm+'<div class="cols col1">';
- 					htm=htm+'<div class="semesterDiv"'+notesClick+'>'+showNote+'</div>';
- 					htm=htm+'</div>';
+					//htm=htm+'<div class="cols col1">';
+ 					//htm=htm+'<div class="semesterDiv2"'+notesClick+'>'+showNote+'</div>';
+ 					//htm=htm+'</div>';
 				}
+				
+				if(len > 0)
+				{
+					htm=htm+"</ul>";
+				}
+				
 				htm=htm+'</div>';
 				//alert(htm);
 				$("#notesListDiv").html(htm);
+				$('#notesListDiv').trigger('create');
+				
 						
 				$.mobile.changePage($('#notesListPage'));
+				
+				
 				
 				
 			});
@@ -743,11 +772,18 @@ function validateSemester() {
 		
 	}
 	
+	function strip(html)
+	{
+   		var tmp = document.createElement("DIV");
+   		tmp.innerHTML = html;
+   		return tmp.textContent||tmp.innerText;
+	}
+	
 	function noteSelect(id)
 	{
 	
-		myBkImage = "url(/Mobile1/images/linedPaper.jpg)";
-		tinyMCE.getInstanceById("theNote").getWin().document.body.style.backgroundImage = myBkImage;    
+		//myBkImage = "url(/Mobile1/images/linedPaper.jpg)";
+		//tinyMCE.getInstanceById("theNote").getWin().document.body.style.backgroundImage = myBkImage;    
 		//alert("noteSelect="+id);
 		var classHtml=getClassPageHeaderHtml(dbClass);
 		$("#editNotePageClassName").html("Notes-"+classHtml);
@@ -1194,6 +1230,7 @@ function validateSemester() {
  	<div data-role="header" data-position="fixed" data-theme="a">		
  		<a href="#" id="backToClassLink" data-icon="arrow-l"></a>	
 		<h1 id="notesListPageHeader"></h1>
+		<a href="#" id="newNoteBtn" data-icon="check">New Note</a>
 	</div>
 	<div id="notesListDiv">
 	</div>
@@ -1209,7 +1246,10 @@ function validateSemester() {
 			<a href="#" id="saveNoteBtn" data-icon="check">Save</a>
 		</div>
     	<input type="hidden" id="notesEntryClassId">
-    	<textarea id="theNote" name="theNote" rows="20" cols="50" class="textareaStyled"></textarea>
+    	
+    	xxxxxxxxx
+    	<textarea id="theNote" name="theNote"  class="mceEditor"></textarea>
+    	yyyyyyyyy
 
 </div>
 
