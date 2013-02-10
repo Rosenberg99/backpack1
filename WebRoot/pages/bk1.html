@@ -11,6 +11,7 @@
 <script type="text/javascript" src="http://dev.jtsage.com/cdn/simpledialog/latest/jquery.mobile.simpledialog.min.js"></script>
 <script type="text/javascript" src="../scripts/db.js"></script>
 
+
 <script type="text/javascript" src="../scripts/tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
 <script type="text/javascript" src="../scripts/tinymce/jscripts/tiny_mce/jquery.tinymce.js"></script>
 
@@ -250,9 +251,6 @@
 		});
 		
 		
-		
-		
-		
 		tinyMCE.init({
     		// General options
     		mode : "textareas",
@@ -263,7 +261,7 @@
     		theme_advanced_toolbar_location : "top",
     		theme_advanced_toolbar_align : "left",
     		theme_advanced_statusbar_location : "bottom",
-    		theme_advanced_resizing : true,
+    		theme_advanced_resizing : false,
      		theme_advanced_source_editor_height : 1100,
     		content_css : "mce.css",
     		body_class2 : "mceContentBody",
@@ -272,10 +270,14 @@
     		height: "99%"
 		});
 		
+		 $('#noteSearch').bind('keyup change', function () {
+		 	classNotes();
+		 });
+		
 		sizeNote();
 		
-		
-
+		$.mobile.defaultPageTransition = "none";
+	
 	});
 	
 function sizeNote()
@@ -707,8 +709,10 @@ function validateSemester() {
 			
 			currentDate="";
 			
+			var searchStr=$("#noteSearch").val();
 			
-			getAllNotesForClass(id, function(transaction2, theClassNotes){
+			
+			getAllNotesForClass(id, searchStr, function(transaction2, theClassNotes){
 				var len = theClassNotes.rows.length, i;
 				var htm='';
 		
@@ -1033,7 +1037,16 @@ function validateSemester() {
 	
 	}
 	
+	function searchNotes()
+	{
 	
+		//alert($("#noteSearch").val());
+		getAllNotesForClass(dbClass.rows.item(0).id, $("#noteSearch").val(), function(transaction, theNotes){
+				var len = theNotes.rows.length, i;
+				alert("notes found="+len)
+			});
+	
+	}
 	
 </script>
 </head>
@@ -1049,7 +1062,7 @@ function validateSemester() {
 
 
 <div data-role="page" class="splashImage" id="semesterListPage">
- 	<div data-role="header" data-position="fixed" data-theme="a">
+ 	<div data-role="header" data-position2="fixed" data-theme="a">
 		<h1 id="semesterListPageHeader">Backpack - Semesters</h1>
 	</div>
 	<div id="semesterListDiv">
@@ -1059,7 +1072,7 @@ function validateSemester() {
 </div>	
 
 <div data-role="page" class="splashImage" id="classListPage">
- 	<div data-role="header" data-position="fixed" data-theme="a">		
+ 	<div data-role="header" data-position2="fixed" data-theme="a">		
  		<a href="#" id="semestersLink" data-icon="arrow-l">Semesters</a>	
 		<h1 id="classListPageHeader"></h1>
 	</div>
@@ -1099,7 +1112,7 @@ function validateSemester() {
 	<!-- class pages -->
 			<div data-role="page" class="splashImage" id="editClassPage">
 				<input type="hidden" id="classEntryClassId">
-				<div data-role="header" data-position="fixed" data-theme="a">		
+				<div data-role="header" data-position2="fixed" data-theme="a">		
 					<a href="#" id="editClassBackToClassLink" data-icon="arrow-l"></a>	
 					<h1 >Class Edit</h1>
 					<a href="#" id="updateClass" data-icon="check">Save</a>
@@ -1197,7 +1210,7 @@ function validateSemester() {
 
 
 <div data-role="page" class="splashImage" id="classPage">
- 	<div data-role="header" data-position="fixed" data-theme="a">	
+ 	<div data-role="header" data-position2="fixed" data-theme="a">	
  		<a href="#" id="classesLink" data-icon="arrow-l">Classes</a>			
 		<h1 id="classPageHeader"></h1>
 	</div>
@@ -1227,11 +1240,15 @@ function validateSemester() {
 
 
 <div data-role="page" class="splashImage" id="notesListPage">
- 	<div data-role="header" data-position="fixed" data-theme="a">		
+ 	<div data-role="header" data-position2="fixed" data-theme="a">		
  		<a href="#" id="backToClassLink" data-icon="arrow-l"></a>	
 		<h1 id="notesListPageHeader"></h1>
-		<a href="#" id="newNoteBtn" data-icon="check">New Note</a>
+		<a href="#" id="newNoteBtn" >New Note</a>
+		
 	</div>
+	<label for="search-basic">Search Notes:</label>
+		<input type="search" name="noteSearch" id="noteSearch" data-mini="true" maxlength=25" value="" />
+		
 	<div id="notesListDiv">
 	</div>
 	
@@ -1254,7 +1271,7 @@ function validateSemester() {
 </div>
 
 <div data-role="page" class="splashImage" id="qaListPage">
- 	<div data-role="header" data-position="fixed" data-theme="a">		
+ 	<div data-role="header" data-position2="fixed" data-theme="a">		
  		<a href="#" id="qaListPageBackBtn" data-icon="arrow-l"></a>	
 		<h1 id="qaListPageHeader"></h1>
 	</div>

@@ -1,3 +1,12 @@
+.ui-page {
+    -webkit-backface-visibility: hidden;
+}
+
+.ui-mobile-viewport-transitioning,
+.ui-mobile-viewport-transitioning .ui-page {
+    overflow: visible;
+}
+
 
 textarea { border: none; }
 body { padding: 0; }

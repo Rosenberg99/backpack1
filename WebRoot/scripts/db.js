@@ -470,18 +470,36 @@ function storeClass()
 	localStorage.DBClass=results.rows.item(i);
 }
 
-function getAllNotesForClass(classId, callback) {
+function getAllNotesForClass(classId, searchStr, callback) {
 
-//	alert('getAllNotesForClass() called='+classId);
-	var db = initDB();
-	db.transaction(function(tx) {
-		try {
-			tx.executeSql('SELECT * FROM notes where classId=? order by dateCreated  ;', [classId], callback,
+    //alert('getAllNotesForClass() called='+classId+", search="+searchStr);
+    if(searchStr.length > 0)
+    	{
+    		//alert("searching for notes");
+    		searchStr="%"+searchStr.toUpperCase()+"%";
+    		var db = initDB();
+    		db.transaction(function(tx) {
+    			try {
+    				tx.executeSql('SELECT * FROM notes where classId=? and UPPER(notes) like ? order by dateCreated;', [classId, searchStr], callback,
+    					myTransactionErrorCallback);
+    			} catch (err) {
+    				alert(err);
+    			}
+    		});
+    	}
+    else
+    	{
+    		//alert("get all notes");
+    		var db = initDB();
+    		db.transaction(function(tx) {
+    		try {
+    			tx.executeSql('SELECT * FROM notes where classId=? order by dateCreated  ;', [classId], callback,
 					myTransactionErrorCallback);
-		} catch (err) {
-			alert(err);
-		}
-	});
+    		} catch (err) {
+    			alert(err);
+    		}
+    		});
+    	}
 }
 
 function getDBNote(id, callback) {
@@ -926,4 +944,20 @@ function updateSemester(id, sname)
 			alert(err);
 		}
 	});
+}
+
+function dbSearchNotes(searchStr, callback)
+{
+	//alert('searchNotes() called='+searchStr);
+	searchStr="%"+searchStr.toUpperCase()+"%";
+	var db = initDB();
+	db.transaction(function(tx) {
+		try {
+			tx.executeSql('SELECT * FROM notes where UPPER(notes) like ?;', [searchStr], callback,
+					myTransactionErrorCallback);
+		} catch (err) {
+			alert(err);
+		}
+	});
+	
 }
