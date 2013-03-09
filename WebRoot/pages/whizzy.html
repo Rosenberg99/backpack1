@@ -11,9 +11,7 @@
 <script type="text/javascript" src="http://dev.jtsage.com/cdn/simpledialog/latest/jquery.mobile.simpledialog.min.js"></script>
 <script type="text/javascript" src="../scripts/db.js"></script>
 
-
-<script type="text/javascript" src="../scripts/tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
-<script type="text/javascript" src="../scripts/tinymce/jscripts/tiny_mce/jquery.tinymce.js"></script>
+<script type="text/javascript" src="../scripts/whizzy/whizzy.js"></script>
 
 <link rel="stylesheet"	href="./backpack.css" />
 
@@ -59,7 +57,6 @@
 	var currentQuestion=0;
 	var totalQuestions=0;
 	var dbSemester;
-	var dbLink;
 	
 	var selectValues = {
 			"" : "Select...",
@@ -76,8 +73,6 @@
 		createNotesTable(db);
 		createQAMasterTable(db);
 		createQADetailTable(db);
-		createLinksTable(db);
-		
 		
 		$.mobile.changePage($('#splash'));
 		setTimeout("gotoApp()",777);
@@ -253,70 +248,9 @@
 			
 		});
 		
+		whizzywig();
 		
-		tinyMCE.init({
-    		// General options
-    		mode : "textareas",
-    		theme : "advanced",
-    
-    		// Theme options
-   			theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,",
-    		theme_advanced_toolbar_location : "top",
-    		theme_advanced_toolbar_align : "left",
-    		theme_advanced_statusbar_location : "bottom",
-    		theme_advanced_resizing : false,
-     		theme_advanced_source_editor_height : 1100,
-    		content_css : "mce.css",
-    		body_class2 : "mceContentBody",
-    		body_id2 : "theNote", 
-    		width: "100%",
-    		height: "99%"
-		});
-		
-		 $('#noteSearch').bind('keyup change', function () {
-		 	classNotes();
-		 });
-		 
-		 $("#linkBackToClassLink").click(function() {
-			classSelect(dbClass.rows.item(0).id);
-		});
-		
-		$("#newLinkBtn").click(function() {
-			$("#linkAddUrl").val("");
-			$("#linkAddName").val("");
-			dbLink=null;
-			$.mobile.changePage($('#editLinkPage'));
-			
-		});
-		
-		$("#cancelUpdateLink").click(function() {
-			$.mobile.changePage($('#classLinks'));
-			
-		});
-		
-		$("#updateLink").click(function() {
-			var url=$("#linkAddUrl").val();
-			var name=$("#linkAddName").val();
-			//alert("updateQA url="+url+", name="+name);
-			if(dbLink)
-			{
-				updateDBLink( dbLink.id, url, name);
-			}
-			else
-			{
-				createDBLink( dbClass.rows.item(0).id, url, name);
-			}	
-			
-			classLinks(); 
-			
-		});
-		
-		
-		
-		sizeNote();
-		
-		$.mobile.defaultPageTransition = "none";
-	
+
 	});
 	
 function sizeNote()
@@ -461,23 +395,6 @@ function populateSemesters(results) {
 				dbClass=theClass;
 				var classHtml=getClassPageHeaderHtml(dbClass);
 				$("#classPageHeader").html(classHtml);
-				getAllLinksForClass(id, function(transaction2, theLinks){
-					var len = theLinks.rows.length, i;
-					var htm='<div id="classQuickLinksDiv" data-role="collapsible" data-theme="b" data-content-theme="c">';
-					htm=htm+'<h2>Links...</h2>';
-					htm=htm+'<ul data-role="listview">';
-					for (i = 0; i < len; i++) {
-						//htm=htm+'	<li><a href="'+theLinks.rows.item(i).url+'">'+theLinks.rows.item(i).name+'</a></li>';
-						htm=htm+'	<li><a href="http://www.google.com">'+theLinks.rows.item(i).name+'</a></li>';
-					}
-					htm=htm+'</ul>';
-					htm=htm+'</div>';
-					$("#classQuickLinks").html(htm);
-					$('#classQuickLinks').trigger('create');
-				
-				});
-				
-				
 				$.mobile.changePage($('#classPage'));
 		});
 		}
@@ -765,10 +682,8 @@ function validateSemester() {
 			
 			currentDate="";
 			
-			var searchStr=$("#noteSearch").val();
 			
-			
-			getAllNotesForClass(id, searchStr, function(transaction2, theClassNotes){
+			getAllNotesForClass(id, function(transaction2, theClassNotes){
 				var len = theClassNotes.rows.length, i;
 				var htm='';
 		
@@ -1093,97 +1008,6 @@ function validateSemester() {
 	
 	}
 	
-	function searchNotes()
-	{
-	
-		//alert($("#noteSearch").val());
-		getAllNotesForClass(dbClass.rows.item(0).id, $("#noteSearch").val(), function(transaction, theNotes){
-				var len = theNotes.rows.length, i;
-				alert("notes found="+len)
-			});
-	
-	}
-	
-	function classDocuments()
-	{
-		$.mobile.changePage($('#docListPage'));
-		
-		htm="";
-		
-		htm=htm+'<ul data-role="listview">';
-		
-	
-		for(var i=0 ; i < 10; i++)
-		{
-			htm=htm+'<li><a href="index.html">';
-			htm=htm+'	<img src="../images/notebook_sm.png" />';
-			htm=htm+'	<h3>Broken Bells</h3>';
-			htm=htm+'	<p>Broken Bells</p>';
-			htm=htm+'</a></li>';
-		}
-		
-		htm=htm+"</ul>";
-		$('#docListDiv').append(htm).trigger('create');
-				
-	}
-	
-	function classLinks()
-	{
-		classHtml=getClassPageHeaderHtml(dbClass);
-		$("#linkListPageHeader").html("Links-"+classHtml);
-		$.mobile.changePage($('#linkListPage'));
-		$('#linkListDiv').html("");
-		
-		htm="";
-		
-		getDBClass2(dbClass.rows.item(0).id, function(transaction, results){
-			getAllLinksForClass(dbClass.rows.item(0).id, function(transaction2, theLinks){
-				var len = theLinks.rows.length, i;
-				var htm='';
-				
-				htm=htm+'<ul id="linksList" data-role="listview" data-theme="a">'; 
-				var div1='<div id="linkActionDiv" </div>';
-				for (i = 0; i < len; i++) {
-					var sid =  theLinks.rows.item(i).id;
-					var bbb='<div style="border2:5px orange solid;float:right;width:30%" data-role="controlgroup" data-type="horizontal">';
-            		bbb=bbb+'<a href="#" onclick="javascript:linkDelete(\''+sid+'\')"data-role="button">Delete</a>';
-            		bbb=bbb+'<a href="#" onclick="javascript:linkEdit(\''+sid+'\')" data-role="button">Edit</a>';
-        			bbb=bbb+'</div>';
-					var theClick='href="#" onclick="javascript:linkSelect(\''+sid+'\')"';
-					var showLink=theLinks.rows.item(i).name;
-					htm=htm+'<li><div style="border2:5px yellow solid;height:60px"><div style="border2:5px blue solid;float:left;width:30%"><a '+theClick+' data-target="main" >'+showLink+'...</a></div>'+bbb+'</div></li>';
-				}
-				htm=htm+'</ul>';
-				$('#linkListDiv').append(htm).trigger('create');
-				
-			});
-			
-			
-		});
-				
-	}
-	
-	function linkEdit(id)
-	{
-		//alert("linkedit="+id);
-		getDBLink(id, function(transaction, classLink){
-				var len = classLink.rows.length, i;
-				dbLink=classLink.rows.item(0);
-				$("#linkAddUrl").val(classLink.rows.item(0).url);
-				$("#linkAddName").val(classLink.rows.item(0).name);
-				//alert(dbNote.notes);
-				$.mobile.changePage($('#editLinkPage'));
-			});
-	}
-	
-	function linkDelete(id)
-	{
-		//alert("linkdelete="+id);
-		deleteDBLink(id, function(transaction, classLink){
-				classLinks(); 
-			});
-		classLinks();
-	}
 	
 	
 </script>
@@ -1200,7 +1024,7 @@ function validateSemester() {
 
 
 <div data-role="page" class="splashImage" id="semesterListPage">
- 	<div data-role="header" data-position2="fixed" data-theme="a">
+ 	<div data-role="header" data-position="fixed" data-theme="a">
 		<h1 id="semesterListPageHeader">Backpack - Semesters</h1>
 	</div>
 	<div id="semesterListDiv">
@@ -1210,7 +1034,7 @@ function validateSemester() {
 </div>	
 
 <div data-role="page" class="splashImage" id="classListPage">
- 	<div data-role="header" data-position2="fixed" data-theme="a">		
+ 	<div data-role="header" data-position="fixed" data-theme="a">		
  		<a href="#" id="semestersLink" data-icon="arrow-l">Semesters</a>	
 		<h1 id="classListPageHeader"></h1>
 	</div>
@@ -1250,7 +1074,7 @@ function validateSemester() {
 	<!-- class pages -->
 			<div data-role="page" class="splashImage" id="editClassPage">
 				<input type="hidden" id="classEntryClassId">
-				<div data-role="header" data-position2="fixed" data-theme="a">		
+				<div data-role="header" data-position="fixed" data-theme="a">		
 					<a href="#" id="editClassBackToClassLink" data-icon="arrow-l"></a>	
 					<h1 >Class Edit</h1>
 					<a href="#" id="updateClass" data-icon="check">Save</a>
@@ -1348,13 +1172,9 @@ function validateSemester() {
 
 
 <div data-role="page" class="splashImage" id="classPage">
- 	<div data-role="header" data-position2="fixed" data-theme="a">	
+ 	<div data-role="header" data-position="fixed" data-theme="a">	
  		<a href="#" id="classesLink" data-icon="arrow-l">Classes</a>			
 		<h1 id="classPageHeader"></h1>
-		 
-	</div>
-	<div id="classQuickLinks">
-					
 	</div>
 	<div id="classPageDiv">
 	
@@ -1374,9 +1194,6 @@ function validateSemester() {
 			<div class="cols col1">
 				<div class="classDocumentsDiv" onClick="javascript:classDocuments()"><div class="semesterText">Class Documents</div></div>
 			</div>
-			<div class="cols col1">
-				<div class="classLinksDiv" onClick="javascript:classLinks()"><div class="semesterText">Class Links</div></div>
-			</div>
 		</div>
 	
 	
@@ -1385,15 +1202,11 @@ function validateSemester() {
 
 
 <div data-role="page" class="splashImage" id="notesListPage">
- 	<div data-role="header" data-position2="fixed" data-theme="a">		
+ 	<div data-role="header" data-position="fixed" data-theme="a">		
  		<a href="#" id="backToClassLink" data-icon="arrow-l"></a>	
 		<h1 id="notesListPageHeader"></h1>
-		<a href="#" id="newNoteBtn" >New Note</a>
-		
+		<a href="#" id="newNoteBtn" data-icon="check">New Note</a>
 	</div>
-	<label for="search-basic">Search Notes:</label>
-		<input type="search" name="noteSearch" id="noteSearch" data-mini="true" maxlength=25" value="" />
-		
 	<div id="notesListDiv">
 	</div>
 	
@@ -1410,13 +1223,14 @@ function validateSemester() {
     	<input type="hidden" id="notesEntryClassId">
     	
     	xxxxxxxxx
-    	<textarea id="theNote" name="theNote"  class="mceEditor"></textarea>
+    	<textarea name="edited" row="10" cols="80" style="width:99%; height:150px">
+
     	yyyyyyyyy
 
 </div>
 
 <div data-role="page" class="splashImage" id="qaListPage">
- 	<div data-role="header" data-position2="fixed" data-theme="a">		
+ 	<div data-role="header" data-position="fixed" data-theme="a">		
  		<a href="#" id="qaListPageBackBtn" data-icon="arrow-l"></a>	
 		<h1 id="qaListPageHeader"></h1>
 	</div>
@@ -1542,72 +1356,6 @@ function validateSemester() {
 		</div>
  		
 
-	</div>
-	
-	
-	
-</div>	
-
-<div data-role="page" class="splashImage" id="docListPage">
- 	<div data-role="header" data-position2="fixed" data-theme="a">		
- 		<a href="#" id="docBackToClassLink" data-icon="arrow-l"></a>	
-		<h1 id="docListPageHeader"></h1>
-		<a href="#" id="newDocBtn" >New Doc</a>
-		
-	</div>
-	<div id="documentAddDiv"> 
-        <div id="documentAddFields">
-            <div data-role="fieldcontain"> 
-                <label for="semesterName">URL to Document:</label> 
-                <input type="text" maxlength="55" id="documentAddUrl" name="documentAddUrl" style="width:50%"/>
-                 <input type="button" value="Add" name="documentAddButton" id="documentAddButton" data-inline="true">
-            </div>
-           
-        </div>
-	</div>
-	<div id="docListDiv">
-	</div>
-	
-	
-</div>
-
-<div data-role="page" class="splashImage" id="linkListPage">
- 	<div data-role="header" data-position2="fixed" data-theme="a">		
- 		<a href="#" id="linkBackToClassLink" data-icon="arrow-l"></a>	
-		<h1 id="linkListPageHeader"></h1>
-		<a href="#" id="newLinkBtn" >New Link</a>
-	</div>
-	<div id="linkAddDiv"> 
-       
-	</div>
-	<div id="linkListDiv">
-	</div>
-	
-	
-</div>
-
-<div id="editLinkPage" data-role="dialog">
-		<div data-role="header" data-theme="e">
-			<h1>Update/Add Link</h1>
-
-		</div>
- 	
-	<div id="linkAddDiv"> 
-		 <div id="linkAddFields">
-            <div data-role="fieldcontain"> 
-                <label for="linkAddUrl">URL:</label> 
-                <input type="text" maxlength="75" id="linkAddUrl" name="documentAddUrl" style="width:50%"/>
-            </div>
-              <div data-role="fieldcontain"> 
-                <label for="linkAddName">Name:</label> 
-                 <input type="text" maxlength="50" id="linkAddName" name="linkAddName" style="width:18%"/>
-             </div>    
-           		
-		<a href="#" data-role="button"  id="updateLink" >Save</a>
-				
-
-	</div>
-	
 	</div>
 	
 </div>
